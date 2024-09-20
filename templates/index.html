@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Enkripsi & Dekripsi Kriptografi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555555;
+        }
+
+        select, input[type="text"], textarea, input[type="file"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        select:focus, input[type="text"]:focus, textarea:focus, input[type="file"]:focus {
+            border-color: #66afe9;
+            outline: none;
+            box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .output {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .output h3 {
+            margin-bottom: 10px;
+            color: #333333;
+        }
+
+        .output textarea {
+            height: 150px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+        }
+
+        .flash {
+            background-color: #ffdddd;
+            border-left: 6px solid #f44336;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            color: #a94442;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input[type="submit"] {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enkripsi & Dekripsi Kriptografi</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST" enctype="multipart/form-data">
+            <label for="cipher">Pilih Cipher:</label>
+            <select name="cipher" required>
+                <option value="">--Pilih Cipher--</option>
+                <option value="vigenere">Vigenere</option>
+                <option value="playfair">Playfair</option>
+                <option value="hill">Hill</option>
+            </select>
+
+            <label for="text">Plain Text:</label>
+            <textarea name="text" placeholder="Masukkan pesan di sini..."></textarea>
+
+            <label for="file">Atau Unggah File TXT:</label>
+            <input type="file" name="file" accept=".txt">
+
+            <label for="key">Key:</label>
+            <input type="text" name="key" required minlength="12" placeholder="Masukkan kunci minimal 12 karakter">
+
+            <label for="operation">Operasi:</label>
+            <select name="operation" required>
+                <option value="">--Pilih Operasi--</option>
+                <option value="encrypt">Enkripsi</option>
+                <option value="decrypt">Dekripsi</option>
+            </select>
+
+            <input type="submit" value="Proses">
+        </form>
+
+        {% if output %}
+            <div class="output">
+                <h3>Hasil:</h3>
+                <textarea readonly>{{ output }}</textarea>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
